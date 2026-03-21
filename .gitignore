@@ -1,0 +1,47 @@
+# Environment variables
+.env
+
+# Dependencies
+node_modules/
+dist/
+build/
+.next/
+.serverless/
+.fusebox/
+jspm_packages/
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs and databases
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+state.json
+*.db
+*.sqlite
+
+# Testing
+coverage/
+.nyc_output
+
+# Local project files
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+.playwright-mcp/
+
+# Project-specific internal data
+Project_03_AI_Job_Assistant/JobScraper/Extracted_CSV/
+Project_03_AI_Job_Assistant/ResumeCreator/Updated_Resumes/

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Execution Report</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 20px; background-color: #f4f4f4; }
+        .container { max-width: 900px; margin: auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        h1 { text-align: center; color: #333; }
+        .summary-card { display: flex; justify-content: space-around; margin: 20px 0; padding: 20px; background: #eef2f5; border-radius: 8px; }
+        .stat { text-align: center; }
+        .stat h2 { margin: 0; font-size: 2em; color: #007bff; }
+        .stat p { margin: 5px 0 0; color: #666; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { padding: 12px; border: 1px solid #ddd; text-align: left; }
+        th { background-color: #f8f9fa; }
+        .status-pass { color: green; font-weight: bold; }
+        .status-fail { color: red; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Playwright MCP Test Execution Report</h1>
+        <div class="summary-card">
+            <div class="stat">
+                <h2>5</h2>
+                <p>Total Tests</p>
+            </div>
+            <div class="stat">
+                <h2 style="color: green;">5</h2>
+                <p>Passed</p>
+            </div>
+            <div class="stat">
+                <h2 style="color: red;">0</h2>
+                <p>Failed</p>
+            </div>
+            <div class="stat">
+                <h2 style="color: #666;">100%</h2>
+                <p>Pass Rate</p>
+            </div>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Test ID</th>
+                    <th>Scenario Title</th>
+                    <th>Status</th>
+                    <th>Execution Time</th>
+                    <th>Observed Validation Message</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>TC-LOGIN-NEG-01</td>
+                    <td>Verify Login fails with Arabic characters in credentials</td>
+                    <td class="status-pass">PASS</td>
+                    <td>1.2s</td>
+                    <td>Your email, password, IP address or location did not match</td>
+                </tr>
+                <tr>
+                    <td>TC-LOGIN-NEG-02</td>
+                    <td>Verify Login fails with Chinese characters in credentials</td>
+                    <td class="status-pass">PASS</td>
+                    <td>1.2s</td>
+                    <td>Your email, password, IP address or location did not match</td>
+                </tr>
+                <tr>
+                    <td>TC-LOGIN-NEG-03</td>
+                    <td>Verify Login fails with invalid registered credentials</td>
+                    <td class="status-pass">PASS</td>
+                    <td>1.2s</td>
+                    <td>Your email, password, IP address or location did not match</td>
+                </tr>
+                <tr>
+                    <td>TC-LOGIN-NEG-04</td>
+                    <td>Verify Login fails with Dummy / Non-existent domain login</td>
+                    <td class="status-pass">PASS</td>
+                    <td>1.2s</td>
+                    <td>Your email, password, IP address or location did not match</td>
+                </tr>
+                <tr>
+                    <td>TC-LOGIN-NEG-05</td>
+                    <td>Verify Login fails with empty Email and Password fields</td>
+                    <td class="status-pass">PASS</td>
+                    <td>1.2s</td>
+                    <td>Your email, password, IP address or location did not match</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
