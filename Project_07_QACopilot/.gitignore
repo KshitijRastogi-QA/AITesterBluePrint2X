@@ -1,0 +1,14 @@
+qdrant_data/
+.venv/
+venv/
+__pycache__/
+*.pyc
+.env
+node_modules/
+frontend/dist/
+data/selenium_repo/
+data/playwright_repo/
+data/_skip_report.json
+output/
+*.log
+.DS_Store

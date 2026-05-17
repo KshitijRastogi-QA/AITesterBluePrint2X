@@ -1,0 +1,11 @@
+Test ID,Module,Feature,Test Type,Description,Pre-conditions,Test Steps,Expected Result,Status,Jira ID
+TC-001,Authentication,Login,Functional,Verify successful login with valid credentials,User exists in system,1. Navigate to login page 2. Enter valid email and password 3. Click Login,User is redirected to dashboard; auth token generated,Pass,JIRA-1001
+TC-002,Authentication,Login,Security,Verify login fails with invalid password,User exists in system,1. Navigate to login page 2. Enter valid email and wrong password 3. Click Login,Error message 'Invalid credentials' displayed,Pass,JIRA-1002
+TC-003,Authentication,Login,Functional,Verify password field masks input,None,1. Navigate to login page 2. Type password in the field,Characters are masked as dots or asterisks,Pass,JIRA-1003
+TC-004,Dashboard,Navigation,UI,Verify sidebar navigation links are functional,User is logged in,1. View sidebar 2. Click on 'Profile',Navigates to user profile page,Pass,JIRA-1004
+TC-005,Reporting,Export,Functional,Verify CSV export of test cases,Test cases exist in project,1. Navigate to test cases table 2. Click Export 3. Select CSV,CSV file downloads containing all test cases,Pass,JIRA-1005
+TC-006,Authentication,SSO,Functional,Verify SSO login with Google,Google Workspace integration configured,1. Navigate to login page 2. Click 'Continue with Google' 3. Complete auth flow,User logs in and reaches dashboard,Pass,JIRA-1006
+TC-007,User Profile,Avatar,Functional,Verify user can upload avatar image,User is logged in,1. Go to Profile 2. Click Avatar 3. Upload valid PNG image,Avatar updates without errors,Pass,JIRA-1007
+TC-008,User Profile,Avatar,Negative,Verify error on invalid avatar format,User is logged in,1. Go to Profile 2. Click Avatar 3. Upload PDF file,Error message 'Invalid file format' displayed,Pass,JIRA-1008
+TC-009,Settings,Notifications,Functional,Verify email notification toggle,User is logged in,1. Go to Settings 2. Toggle Email Notifications off 3. Save,Preferences updated; no emails sent for actions,Pass,JIRA-1009
+TC-010,API,Get Users,Performance,Verify API latency for GET /users is under 200ms,1000 users exist in DB,1. Execute GET /users with Postman,Response status 200; Response time < 200ms,Pass,JIRA-1010

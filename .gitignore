@@ -5,6 +5,29 @@
 node_modules/
 dist/
 build/
+
+# Python
+.venv/
+venv/
+uses/
+__pycache__/
+*.py[cod]
+*.pyo
+.python-version
+
+# Java build output
+target/
+*.class
+
+# Vector / embedded databases
+**/chroma_db/
+**/qdrant_data/
+**/*.sqlite3
+**/*.pickle
+**/*.bin
+
+# Entire langflow-qa dir (only contains venvs, no source)
+langflow-qa/
 .next/
 .serverless/
 .fusebox/

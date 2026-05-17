@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AITesterBluePrint2X — Blog Cover</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #050810;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    font-family: 'Courier New', monospace;
+    overflow: hidden;
+  }
+
+  .cover {
+    width: 1200px;
+    height: 630px;
+    position: relative;
+    background: linear-gradient(135deg, #050810 0%, #0a0f1e 50%, #050810 100%);
+    overflow: hidden;
+    border-radius: 12px;
+  }
+
+  /* ── GRID BACKGROUND ── */
+  .grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,200,255,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,200,255,0.04) 1px, transparent 1px);
+    background-size: 40px 40px;
+    animation: gridShift 20s linear infinite;
+  }
+  @keyframes gridShift {
+    from { transform: translateY(0); }
+    to   { transform: translateY(40px); }
+  }
+
+  /* ── AMBIENT GLOW ORBS ── */
+  .orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.18;
+    animation: orbPulse 6s ease-in-out infinite alternate;
+  }
+  .orb-1 { width:380px; height:380px; background:#0066ff; top:-80px; left:-60px; animation-delay:0s; }
+  .orb-2 { width:300px; height:300px; background:#00ffcc; bottom:-60px; right:80px; animation-delay:2s; }
+  .orb-3 { width:200px; height:200px; background:#7700ff; top:180px; right:300px; animation-delay:4s; }
+  @keyframes orbPulse {
+    from { opacity: 0.12; transform: scale(1); }
+    to   { opacity: 0.25; transform: scale(1.15); }
+  }
+
+  /* ── DATA STREAMS ── */
+  .streams {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+  .stream {
+    position: absolute;
+    top: -20px;
+    width: 1px;
+    height: 60px;
+    background: linear-gradient(to bottom, transparent, #00ffcc, transparent);
+    animation: streamFall linear infinite;
+    opacity: 0.5;
+  }
+  @keyframes streamFall {
+    from { top: -80px; opacity: 0; }
+    10%  { opacity: 0.6; }
+    90%  { opacity: 0.4; }
+    to   { top: 700px; opacity: 0; }
+  }
+
+  /* ── MAN AT DESK ── */
+  .desk-scene {
+    position: absolute;
+    bottom: 30px;
+    left: 60px;
+    width: 420px;
+    height: 420px;
+  }
+
+  /* Screen glow behind monitor */
+  .screen-glow {
+    position: absolute;
+    width: 220px;
+    height: 160px;
+    background: radial-gradient(ellipse, rgba(0,150,255,0.35) 0%, transparent 70%);
+    top: 60px;
+    left: 60px;
+    filter: blur(18px);
+    animation: screenFlicker 4s ease-in-out infinite;
+  }
+  @keyframes screenFlicker {
+    0%,100% { opacity: 0.9; }
+    45%     { opacity: 0.7; }
+    50%     { opacity: 1.0; }
+    55%     { opacity: 0.8; }
+  }
+
+  .desk-svg { position: absolute; bottom: 0; left: 0; }
+
+  /* ── FLOATING CARDS ── */
+  .cards {
+    position: absolute;
+    top: 0; right: 0;
+    width: 580px;
+    height: 630px;
+  }
+
+  .card {
+    position: absolute;
+    background: rgba(10,20,40,0.85);
+    border: 1px solid rgba(0,200,255,0.2);
+    border-radius: 8px;
+    padding: 14px 16px;
+    font-size: 11px;
+    color: #aac;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 0 30px rgba(0,100,255,0.08), inset 0 1px 0 rgba(255,255,255,0.04);
+    animation: cardFloat ease-in-out infinite alternate;
+  }
+  .card-header {
+    font-size: 10px;
+    color: #00ffcc;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    border-bottom: 1px solid rgba(0,200,255,0.15);
+    padding-bottom: 6px;
+  }
+
+  /* Terminal card */
+  .card-terminal {
+    top: 32px; right: 30px;
+    width: 300px;
+    animation-duration: 5s;
+    animation-delay: 0s;
+  }
+  .card-terminal .line { margin: 3px 0; }
+  .card-terminal .prompt { color: #00ffcc; }
+  .card-terminal .cmd    { color: #ffffff; }
+  .card-terminal .ok     { color: #00ff88; }
+  .card-terminal .err    { color: #ff4466; }
+  .card-terminal .dim    { color: #556; }
+
+  /* MCP Inspector card */
+  .card-inspector {
+    top: 230px; right: 20px;
+    width: 260px;
+    animation-duration: 6s;
+    animation-delay: 1s;
+  }
+  .tool-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 4px 0;
+    font-size: 10px;
+  }
+  .tool-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .tool-dot.green  { background: #00ff88; box-shadow: 0 0 6px #00ff88; }
+  .tool-dot.blue   { background: #00aaff; box-shadow: 0 0 6px #00aaff; }
+  .tool-dot.purple { background: #aa66ff; box-shadow: 0 0 6px #aa66ff; }
+  .tool-name { color: #cce; }
+  .tool-badge {
+    margin-left: auto;
+    font-size: 9px;
+    padding: 1px 6px;
+    border-radius: 3px;
+    background: rgba(0,255,136,0.12);
+    color: #00ff88;
+    border: 1px solid rgba(0,255,136,0.25);
+  }
+
+  /* Test results card */
+  .card-results {
+    top: 430px; right: 90px;
+    width: 310px;
+    animation-duration: 7s;
+    animation-delay: 0.5s;
+  }
+  .result-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 4px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    font-size: 10px;
+  }
+  .pass { color: #00ff88; }
+  .fail { color: #ff4466; }
+  .run  { color: #ffaa00; }
+
+  .progress-bar {
+    height: 4px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 2px;
+    margin-top: 10px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #00ffcc, #0066ff);
+    border-radius: 2px;
+    animation: progressGrow 3s ease-out forwards, progressPulse 2s ease-in-out 3s infinite;
+    width: 0%;
+  }
+  @keyframes progressGrow  { to { width: 76%; } }
+  @keyframes progressPulse { 0%,100% { opacity:1; } 50% { opacity:0.6; } }
+
+  /* Bug report card */
+  .card-bug {
+    top: 120px; right: 350px;
+    width: 190px;
+    animation-duration: 8s;
+    animation-delay: 2s;
+  }
+  .bug-id   { color: #ff4466; font-weight: bold; font-size: 11px; }
+  .bug-desc { color: #889; font-size: 10px; margin-top: 4px; line-height: 1.5; }
+  .bug-tag  {
+    display: inline-block;
+    margin-top: 8px;
+    font-size: 9px;
+    padding: 2px 7px;
+    border-radius: 3px;
+    background: rgba(255,68,102,0.12);
+    color: #ff4466;
+    border: 1px solid rgba(255,68,102,0.3);
+  }
+
+  @keyframes cardFloat {
+    from { transform: translateY(0px); }
+    to   { transform: translateY(-8px); }
+  }
+
+  /* ── MCP CONNECTION LINES ── */
+  .connections {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  /* ── TITLE BLOCK ── */
+  .title-block {
+    position: absolute;
+    top: 40px;
+    left: 60px;
+    max-width: 480px;
+  }
+  .eyebrow {
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: #00ffcc;
+    text-transform: uppercase;
+    opacity: 0.8;
+    margin-bottom: 10px;
+    animation: fadeSlideIn 1s ease 0.2s both;
+  }
+  .title-main {
+    font-size: 34px;
+    font-weight: 900;
+    line-height: 1.15;
+    color: #ffffff;
+    font-family: 'Arial Black', 'Arial', sans-serif;
+    letter-spacing: -0.5px;
+    animation: fadeSlideIn 1s ease 0.5s both;
+  }
+  .title-main span {
+    background: linear-gradient(90deg, #00ffcc, #0088ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .subtitle {
+    margin-top: 12px;
+    font-size: 13px;
+    color: #6688aa;
+    line-height: 1.6;
+    letter-spacing: 0.2px;
+    animation: fadeSlideIn 1s ease 0.8s both;
+  }
+
+  .status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    margin-top: 18px;
+    padding: 6px 14px;
+    border-radius: 20px;
+    background: rgba(0,255,136,0.08);
+    border: 1px solid rgba(0,255,136,0.25);
+    font-size: 11px;
+    color: #00ff88;
+    letter-spacing: 1px;
+    animation: fadeSlideIn 1s ease 1.1s both, pillGlow 3s ease-in-out 2s infinite;
+  }
+  .pulse-dot {
+    width: 7px; height: 7px;
+    background: #00ff88;
+    border-radius: 50%;
+    box-shadow: 0 0 8px #00ff88;
+    animation: dotBlink 1.4s ease-in-out infinite;
+  }
+  @keyframes dotBlink  { 0%,100%{opacity:1;} 50%{opacity:0.2;} }
+  @keyframes pillGlow  { 0%,100%{box-shadow:0 0 0 rgba(0,255,136,0);} 50%{box-shadow:0 0 18px rgba(0,255,136,0.2);} }
+
+  @keyframes fadeSlideIn {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── TYPING CURSOR ── */
+  .cursor {
+    display: inline-block;
+    width: 7px;
+    height: 13px;
+    background: #00ffcc;
+    margin-left: 2px;
+    vertical-align: middle;
+    animation: blink 1s step-end infinite;
+  }
+  @keyframes blink { 0%,100%{opacity:1;} 50%{opacity:0;} }
+
+  /* ── PROJECT COUNTER ── */
+  .counter-row {
+    position: absolute;
+    bottom: 32px;
+    right: 40px;
+    display: flex;
+    gap: 20px;
+    animation: fadeSlideIn 1s ease 1.4s both;
+  }
+  .counter-item { text-align: center; }
+  .counter-num {
+    font-size: 28px;
+    font-weight: 900;
+    font-family: 'Arial Black', sans-serif;
+    background: linear-gradient(135deg, #00ffcc, #0066ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1;
+  }
+  .counter-label {
+    font-size: 9px;
+    color: #446;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-top: 3px;
+  }
+  .counter-divider {
+    width: 1px;
+    background: rgba(0,200,255,0.12);
+    align-self: stretch;
+  }
+
+  /* ── BOTTOM STRIP ── */
+  .bottom-strip {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, #00ffcc 30%, #0066ff 70%, transparent);
+    opacity: 0.6;
+    animation: stripScan 4s ease-in-out infinite;
+  }
+  @keyframes stripScan {
+    0%,100% { opacity: 0.4; }
+    50%     { opacity: 0.9; }
+  }
+
+</style>
+</head>
+<body>
+<div class="cover">
+
+  <!-- Background layers -->
+  <div class="grid"></div>
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+
+  <!-- Data streams -->
+  <div class="streams" id="streams"></div>
+
+  <!-- MCP connection lines (SVG) -->
+  <svg class="connections" viewBox="0 0 1200 630" preserveAspectRatio="none">
+    <defs>
+      <filter id="glow">
+        <feGaussianBlur stdDeviation="2.5" result="blur"/>
+        <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+      </filter>
+    </defs>
+    <!-- Lines from desk to cards -->
+    <line x1="340" y1="210" x2="870" y2="140" stroke="rgba(0,200,255,0.12)" stroke-width="1" stroke-dasharray="6 6">
+      <animate attributeName="stroke-dashoffset" from="0" to="-24" dur="1.5s" repeatCount="indefinite"/>
+    </line>
+    <line x1="340" y1="240" x2="870" y2="360" stroke="rgba(0,255,136,0.10)" stroke-width="1" stroke-dasharray="6 6">
+      <animate attributeName="stroke-dashoffset" from="0" to="-24" dur="2s" repeatCount="indefinite"/>
+    </line>
+    <line x1="300" y1="250" x2="560" y2="260" stroke="rgba(170,100,255,0.10)" stroke-width="1" stroke-dasharray="6 6">
+      <animate attributeName="stroke-dashoffset" from="0" to="-24" dur="2.5s" repeatCount="indefinite"/>
+    </line>
+    <!-- Node dots at intersections -->
+    <circle cx="340" cy="210" r="3" fill="#00ffcc" filter="url(#glow)" opacity="0.7">
+      <animate attributeName="opacity" values="0.7;1;0.7" dur="2s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="870" cy="140" r="3" fill="#00aaff" filter="url(#glow)" opacity="0.7">
+      <animate attributeName="opacity" values="0.7;1;0.7" dur="2.5s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="870" cy="360" r="3" fill="#00ff88" filter="url(#glow)" opacity="0.7">
+      <animate attributeName="opacity" values="0.7;1;0.7" dur="3s" repeatCount="indefinite"/>
+    </circle>
+  </svg>
+
+  <!-- ── TITLE BLOCK ── -->
+  <div class="title-block">
+    <div class="eyebrow">AI Engineering · QA Automation · MCP</div>
+    <div class="title-main">
+      I Spent Months<br>Building <span>AI Systems</span><br>for QA.
+    </div>
+    <div class="subtitle">
+      8 projects. Hundreds of hours. A lot of broken environments.<br>
+      And the learning hasn't stopped.
+    </div>
+    <div class="status-pill">
+      <div class="pulse-dot"></div>
+      STILL BUILDING
+    </div>
+  </div>
+
+  <!-- ── DESK SCENE ── -->
+  <div class="desk-scene">
+    <div class="screen-glow"></div>
+    <svg class="desk-svg" width="420" height="420" viewBox="0 0 420 420">
+      <defs>
+        <radialGradient id="screenGrad" cx="50%" cy="50%">
+          <stop offset="0%"   stop-color="#1a3a6a"/>
+          <stop offset="100%" stop-color="#0a1528"/>
+        </radialGradient>
+        <radialGradient id="faceGrad" cx="40%" cy="35%">
+          <stop offset="0%"   stop-color="#d4956a"/>
+          <stop offset="100%" stop-color="#b07040"/>
+        </radialGradient>
+        <filter id="softGlow">
+          <feGaussianBlur stdDeviation="3" result="blur"/>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+
+      <!-- Desk surface -->
+      <ellipse cx="200" cy="370" rx="200" ry="18" fill="rgba(0,100,150,0.08)"/>
+      <rect x="20" y="340" width="380" height="12" rx="3" fill="#0e1a2e"/>
+      <rect x="10" y="350" width="400" height="6" rx="2" fill="#0a1422"/>
+
+      <!-- Monitor stand -->
+      <rect x="175" y="290" width="12" height="55" rx="3" fill="#0e1a2e"/>
+      <rect x="155" y="340" width="52" height="6" rx="3" fill="#0e1a2e"/>
+
+      <!-- Monitor outer bezel -->
+      <rect x="60" y="100" width="280" height="195" rx="10" fill="#0a1422" stroke="#1a2a4a" stroke-width="2"/>
+      <!-- Monitor inner screen -->
+      <rect x="70" y="110" width="260" height="175" rx="6" fill="url(#screenGrad)"/>
+
+      <!-- Screen content — terminal lines -->
+      <rect x="80" y="120" width="100" height="7" rx="3" fill="rgba(0,255,136,0.4)"/>
+      <rect x="80" y="133" width="180" height="6" rx="3" fill="rgba(0,150,255,0.3)"/>
+      <rect x="80" y="145" width="140" height="6" rx="3" fill="rgba(255,255,255,0.15)"/>
+      <rect x="80" y="157" width="200" height="6" rx="3" fill="rgba(0,255,200,0.25)"/>
+      <rect x="80" y="170" width="120" height="6" rx="3" fill="rgba(255,100,150,0.35)"/>
+      <rect x="80" y="182" width="160" height="6" rx="3" fill="rgba(0,255,136,0.3)"/>
+      <rect x="80" y="195" width="90"  height="6" rx="3" fill="rgba(255,255,255,0.12)"/>
+      <rect x="80" y="207" width="210" height="6" rx="3" fill="rgba(0,150,255,0.25)"/>
+      <rect x="80" y="220" width="130" height="6" rx="3" fill="rgba(0,255,200,0.2)"/>
+      <!-- Cursor blink -->
+      <rect x="80" y="233" width="8" height="11" rx="1" fill="#00ffcc" opacity="0.9">
+        <animate attributeName="opacity" values="0.9;0;0.9" dur="1s" repeatCount="indefinite"/>
+      </rect>
+
+      <!-- Screen reflection -->
+      <rect x="70" y="110" width="260" height="40" rx="6" fill="rgba(255,255,255,0.02)"/>
+
+      <!-- Keyboard -->
+      <rect x="90" y="350" width="220" height="14" rx="4" fill="#0e1a2e" stroke="#1a2a40" stroke-width="1"/>
+      <!-- Key rows -->
+      <rect x="95"  y="353" width="210" height="4" rx="2" fill="rgba(0,150,200,0.12)"/>
+      <rect x="100" y="358" width="200" height="3" rx="2" fill="rgba(0,150,200,0.08)"/>
+
+      <!-- Coffee mug -->
+      <rect x="330" y="328" width="24" height="22" rx="4" fill="#1a2a3a" stroke="#2a3a5a" stroke-width="1"/>
+      <path d="M354 335 Q364 335 364 342 Q364 349 354 349" fill="none" stroke="#2a3a5a" stroke-width="1.5" stroke-linecap="round"/>
+      <rect x="332" y="330" width="20" height="5" rx="2" fill="rgba(0,100,200,0.3)"/>
+      <!-- Steam -->
+      <path d="M338 326 Q340 321 338 316" fill="none" stroke="rgba(150,200,255,0.3)" stroke-width="1.5" stroke-linecap="round">
+        <animate attributeName="opacity" values="0.3;0.7;0.3" dur="2s" repeatCount="indefinite"/>
+      </path>
+      <path d="M344 324 Q346 318 344 313" fill="none" stroke="rgba(150,200,255,0.3)" stroke-width="1.5" stroke-linecap="round">
+        <animate attributeName="opacity" values="0.5;0.2;0.5" dur="2.5s" repeatCount="indefinite"/>
+      </path>
+
+      <!-- ── MAN ── -->
+
+      <!-- Chair back -->
+      <rect x="140" y="270" width="8" height="60" rx="4" fill="#0d1928"/>
+      <rect x="262" y="270" width="8" height="60" rx="4" fill="#0d1928"/>
+      <rect x="135" y="268" width="140" height="12" rx="6" fill="#0e1e30"/>
+
+      <!-- Body / torso -->
+      <rect x="158" y="240" width="94" height="85" rx="12" fill="#1e3252"/>
+
+      <!-- Shirt collar area -->
+      <path d="M185 240 L205 258 L225 240" fill="none" stroke="#2a4a72" stroke-width="2"/>
+
+      <!-- Arms -->
+      <!-- Left arm going forward to keyboard -->
+      <path d="M158 260 Q120 280 100 345 Q130 348 160 345 Q165 310 180 265" fill="#1e3252" stroke="#1a2d4a" stroke-width="1"/>
+      <!-- Right arm going forward to keyboard -->
+      <path d="M252 260 Q290 280 310 345 Q280 348 250 345 Q245 310 230 265" fill="#1e3252" stroke="#1a2d4a" stroke-width="1"/>
+
+      <!-- Left hand on keyboard -->
+      <ellipse cx="125" cy="347" rx="22" ry="9" fill="url(#faceGrad)" opacity="0.85"/>
+      <!-- Right hand on keyboard -->
+      <ellipse cx="285" cy="347" rx="22" ry="9" fill="url(#faceGrad)" opacity="0.85"/>
+
+      <!-- Neck -->
+      <rect x="193" y="220" width="24" height="24" rx="6" fill="url(#faceGrad)"/>
+
+      <!-- Head -->
+      <ellipse cx="205" cy="195" rx="42" ry="48" fill="url(#faceGrad)"/>
+
+      <!-- Hair -->
+      <path d="M163 185 Q165 148 205 148 Q245 148 247 185 Q240 158 205 155 Q170 158 163 185Z" fill="#2a1a0a"/>
+      <path d="M163 175 Q160 155 175 148 Q165 160 168 178Z" fill="#2a1a0a"/>
+      <path d="M247 175 Q250 155 235 148 Q245 160 242 178Z" fill="#2a1a0a"/>
+
+      <!-- Ears -->
+      <ellipse cx="163" cy="200" rx="7" ry="10" fill="url(#faceGrad)"/>
+      <ellipse cx="247" cy="200" rx="7" ry="10" fill="url(#faceGrad)"/>
+
+      <!-- Eyes (focused at screen — slight squint) -->
+      <!-- Left eye -->
+      <ellipse cx="188" cy="198" rx="9" ry="7" fill="#fff" opacity="0.92"/>
+      <ellipse cx="190" cy="199" rx="5" ry="5" fill="#1a0a00"/>
+      <ellipse cx="191" cy="198" rx="3" ry="3" fill="#3a2010"/>
+      <circle  cx="193" cy="196" r="1.5" fill="rgba(255,255,255,0.8)"/>
+
+      <!-- Right eye -->
+      <ellipse cx="222" cy="198" rx="9" ry="7" fill="#fff" opacity="0.92"/>
+      <ellipse cx="224" cy="199" rx="5" ry="5" fill="#1a0a00"/>
+      <ellipse cx="225" cy="198" rx="3" ry="3" fill="#3a2010"/>
+      <circle  cx="227" cy="196" r="1.5" fill="rgba(255,255,255,0.8)"/>
+
+      <!-- Eyebrows (furrowed — concentrating) -->
+      <path d="M180 188 Q188 183 197 186" fill="none" stroke="#2a1a0a" stroke-width="2.5" stroke-linecap="round"/>
+      <path d="M213 186 Q222 183 230 188" fill="none" stroke="#2a1a0a" stroke-width="2.5" stroke-linecap="round"/>
+
+      <!-- Nose -->
+      <path d="M202 205 Q200 215 205 218 Q210 215 208 205" fill="none" stroke="rgba(150,90,50,0.5)" stroke-width="1.5" stroke-linecap="round"/>
+
+      <!-- Mouth (slight focus-smile) -->
+      <path d="M193 228 Q205 234 217 228" fill="none" stroke="rgba(130,70,40,0.7)" stroke-width="2" stroke-linecap="round"/>
+
+      <!-- Screen light on face — blue tint overlay -->
+      <ellipse cx="205" cy="200" rx="42" ry="48"
+        fill="rgba(0,120,255,0.08)"
+        style="mix-blend-mode:screen">
+        <animate attributeName="opacity" values="0.08;0.14;0.08" dur="4s" repeatCount="indefinite"/>
+      </ellipse>
+
+      <!-- Glasses (subtle) -->
+      <rect x="179" y="192" width="22" height="14" rx="5" fill="none" stroke="rgba(100,160,255,0.35)" stroke-width="1.5"/>
+      <rect x="209" y="192" width="22" height="14" rx="5" fill="none" stroke="rgba(100,160,255,0.35)" stroke-width="1.5"/>
+      <line x1="201" y1="199" x2="209" y2="199" stroke="rgba(100,160,255,0.35)" stroke-width="1.5"/>
+
+      <!-- Post-it note on monitor -->
+      <rect x="295" y="112" width="32" height="30" rx="2" fill="rgba(255,220,0,0.15)" stroke="rgba(255,220,0,0.2)" stroke-width="1"/>
+      <rect x="299" y="117" width="24" height="3" rx="1" fill="rgba(255,220,0,0.3)"/>
+      <rect x="299" y="123" width="18" height="3" rx="1" fill="rgba(255,220,0,0.3)"/>
+      <rect x="299" y="129" width="22" height="3" rx="1" fill="rgba(255,220,0,0.3)"/>
+    </svg>
+  </div>
+
+  <!-- ── FLOATING CARDS ── -->
+  <div class="cards">
+
+    <!-- Terminal card -->
+    <div class="card card-terminal">
+      <div class="card-header">⬡ Terminal — server.py</div>
+      <div class="line"><span class="prompt">$</span> <span class="cmd">python server.py</span></div>
+      <div class="line"><span class="ok">✓ FastMCP 3.3.1 started</span></div>
+      <div class="line"><span class="dim">Transport: SSE · port 8000</span></div>
+      <div class="line"><span class="ok">✓ 24 tools registered</span></div>
+      <div class="line"><span class="ok">✓ 3 resources registered</span></div>
+      <div class="line"><span class="ok">✓ 5 prompts registered</span></div>
+      <div class="line" style="margin-top:6px"><span class="err">✗ OPTIONS /sse 405</span> <span class="dim">← CORS!</span></div>
+      <div class="line"><span class="dim">→ adding CORSMiddleware...</span></div>
+      <div class="line"><span class="ok">✓ OPTIONS /sse 200  fixed.</span> <span class="cursor"></span></div>
+    </div>
+
+    <!-- MCP Inspector card -->
+    <div class="card card-inspector">
+      <div class="card-header">⬡ MCP Inspector · SSE</div>
+      <div class="tool-row">
+        <div class="tool-dot green"></div>
+        <span class="tool-name">browser_to_url</span>
+        <span class="tool-badge">tool</span>
+      </div>
+      <div class="tool-row">
+        <div class="tool-dot green"></div>
+        <span class="tool-name">browser_click</span>
+        <span class="tool-badge">tool</span>
+      </div>
+      <div class="tool-row">
+        <div class="tool-dot green"></div>
+        <span class="tool-name">browser_fill</span>
+        <span class="tool-badge">tool</span>
+      </div>
+      <div class="tool-row">
+        <div class="tool-dot blue"></div>
+        <span class="tool-name">qa/test-suite-config</span>
+        <span class="tool-badge" style="color:#00aaff;background:rgba(0,150,255,0.1);border-color:rgba(0,150,255,0.25)">resource</span>
+      </div>
+      <div class="tool-row">
+        <div class="tool-dot purple"></div>
+        <span class="tool-name">generate_login_test</span>
+        <span class="tool-badge" style="color:#aa66ff;background:rgba(150,100,255,0.1);border-color:rgba(150,100,255,0.25)">prompt</span>
+      </div>
+      <div style="margin-top:8px;font-size:9px;color:#446;letter-spacing:1px">
+        + 19 more tools · 2 resources · 4 prompts
+      </div>
+    </div>
+
+    <!-- Test results card -->
+    <div class="card card-results">
+      <div class="card-header">⬡ Test Orchestrator · Run #101</div>
+      <div class="result-row">
+        <span>Authentication flow</span><span class="pass">✓ PASS</span>
+      </div>
+      <div class="result-row">
+        <span>Checkout — mobile</span><span class="fail">✗ FAIL</span>
+      </div>
+      <div class="result-row">
+        <span>Password reset</span><span class="pass">✓ PASS</span>
+      </div>
+      <div class="result-row">
+        <span>SSO login</span><span class="run">↻ RUNNING</span>
+      </div>
+      <div class="result-row" style="border:none">
+        <span>Profile update</span><span style="color:#446">⏳ QUEUED</span>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill"></div>
+      </div>
+      <div style="margin-top:6px;font-size:9px;color:#446;letter-spacing:0.5px">
+        42 / 55 passed · 3 failed · 10 queued
+      </div>
+    </div>
+
+    <!-- Bug card -->
+    <div class="card card-bug">
+      <div class="card-header">⬡ JIRA Bug Filed</div>
+      <div class="bug-id">BUG-2847</div>
+      <div class="bug-desc">Checkout modal fails to close on mobile Safari after payment confirmation</div>
+      <div class="bug-tag">🐛 AI Filed</div>
+    </div>
+
+  </div>
+
+  <!-- Project counters -->
+  <div class="counter-row">
+    <div class="counter-item">
+      <div class="counter-num">8</div>
+      <div class="counter-label">Projects</div>
+    </div>
+    <div class="counter-divider"></div>
+    <div class="counter-item">
+      <div class="counter-num">24</div>
+      <div class="counter-label">MCP Tools</div>
+    </div>
+    <div class="counter-divider"></div>
+    <div class="counter-item">
+      <div class="counter-num">∞</div>
+      <div class="counter-label">Still Learning</div>
+    </div>
+  </div>
+
+  <div class="bottom-strip"></div>
+
+</div>
+
+<script>
+  // Generate random data streams
+  const streamsEl = document.getElementById('streams');
+  const cols = [80, 140, 220, 310, 400, 480, 560, 650, 720, 800, 870, 940, 1020, 1100, 1160];
+  cols.forEach((left, i) => {
+    const el = document.createElement('div');
+    el.className = 'stream';
+    el.style.left = left + 'px';
+    el.style.height = (40 + Math.random() * 80) + 'px';
+    el.style.animationDuration = (4 + Math.random() * 8) + 's';
+    el.style.animationDelay = (Math.random() * 6) + 's';
+    el.style.opacity = 0.2 + Math.random() * 0.4;
+    // Alternate colors
+    const colors = ['#00ffcc', '#0088ff', '#aa66ff', '#00ff88'];
+    el.style.background = `linear-gradient(to bottom, transparent, ${colors[i % colors.length]}, transparent)`;
+    streamsEl.appendChild(el);
+  });
+</script>
+
+</body>
+</html>
