@@ -56,6 +56,8 @@ All agent prompts are located under the `specs/` directory:
 | `specs/test-case-executor.md` | Executes test cases via Playwright AI Agent |
 | `specs/jira-bug-creator.md` | Creates JIRA bugs from failed test cases |
 
+> Note: `specs/README.md` (this file) IS the master orchestrator prompt — load it as the system prompt in your AI agent to start the pipeline.
+
 ---
 
 ---
