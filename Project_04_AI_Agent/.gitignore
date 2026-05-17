@@ -1,8 +1,31 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+build/
 
 # Playwright
-node_modules/
-/test-results/
-/playwright-report/
-/blob-report/
-/playwright/.cache/
-/playwright/.auth/
+test-results/
+playwright-report/
+blob-report/
+playwright/.cache/
+playwright/.auth/
+
+# Agent runtime
+.playwright-mcp/
+reports/*.json
+
+# Generated outputs
+scripts/*.csv
+scripts/*.xlsx
+
+# OS / IDE
+.DS_Store
+Thumbs.db
+.claude/
+.vscode/settings.json
+
+# Secrets
+.env
+*.env.local
