@@ -1,0 +1,25 @@
+{
+  "name": "qa-agent-backend",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "ts-node src/server.ts",
+    "dev": "nodemon --exec ts-node src/server.ts"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.39.0",
+    "openai": "^4.104.0",
+    "playwright": "^1.52.0",
+    "express": "^4.21.2",
+    "cors": "^2.8.5",
+    "uuid": "^11.1.0"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.0",
+    "@types/cors": "^2.8.17",
+    "@types/node": "^22.0.0",
+    "@types/uuid": "^10.0.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.5",
+    "nodemon": "^3.1.9"
+  }
+}
