@@ -1,5 +1,6 @@
 import express from 'express';
 import { Request, Response } from 'express';
+import axios from 'axios';
 import { getLLMClient, generateTestCasesWithLLM } from '../services/llmService';
 
 const router = express.Router();
@@ -23,10 +24,27 @@ router.post('/settings', (req: Request, res: Response) => {
 
 router.post('/test-connection', async (req: Request, res: Response) => {
   const config = req.body as LLMConfig;
-  
+
   try {
+    if (config.provider === 'ollama') {
+      const baseUrl = config.baseUrl || 'http://localhost:11434';
+      const { data } = await axios.get(`${baseUrl}/api/tags`, { timeout: 5000 });
+      const models: string[] = (data.models || []).map((m: any) => m.name);
+      const modelName = config.model || 'gemma3:1b';
+      if (!models.includes(modelName)) {
+        return res.status(500).json({ success: false, message: `Model '${modelName}' not found. Available: ${models.join(', ')}` });
+      }
+      return res.json({ success: true, message: `Connected to Ollama. Model '${modelName}' is available.` });
+    }
+
+    if (config.provider === 'lmstudio') {
+      const baseUrl = config.baseUrl || 'http://localhost:1234/v1';
+      await axios.get(`${baseUrl}/models`, { timeout: 5000 });
+      return res.json({ success: true, message: 'Connected to LM Studio successfully.' });
+    }
+
+    // For cloud providers — do a minimal inference call
     const llm = getLLMClient(config);
-    // Ping to check if model/API responds basic completion.
     await llm.invoke("ping");
     res.json({ success: true, message: `Successfully connected to ${config.provider}` });
   } catch (error: any) {

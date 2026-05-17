@@ -1,115 +1,92 @@
-# Test Plan: app.vwo.com Login Feature
+## Test Plan: Amazon In Shopping Site - Page Search Feature
 
-| Field | Value |
-|-------|-------|
-| **Version** | 1.0 |
-| **Author** | QA Team |
-| **Date** | 2026-03-20 |
-| **Environment** | Production |
-| **Browser** | Chromium, Firefox, WebKit |
+**1. Introduction and Objectives**
 
----
+This test plan outlines the testing strategy for the search product feature on the Amazon In e-commerce website. The primary objective is to ensure the search functionality accurately and reliably returns relevant product results based on the extracted DOM structure. This includes validating the correct display of search results, handling various search queries, and confirming successful search operations.
 
-## 1. Introduction
+**2. In-Scope and Out-Scope**
 
-This test plan describes the testing approach for **app.vwo.com Login Feature**. It outlines the scope, test strategy, resources, schedule, and deliverables for the testing effort.
+* **In Scope:**
+    * Search functionality for product names.
+    * Handling of various search queries (keyword, partial, exact).
+    * Display of relevant search results (product name, image, price, description).
+    * Handling of empty or no results scenarios.
+    * Validation that search results correspond to the provided product catalog.
+    * Testing different search parameters (e.g., "Samsung Galaxy M56 5G", "Wireless headphones").
+    * Basic responsiveness across different screen sizes (desktop, tablet, mobile).
+* **Out-of-Scope:**
+    * Performance testing (e.g., load times, speed) – focuses on functional correctness.
+    *  UI design validation – doesn't validate UI aspects, only functional.
+    *  User Authentication – Not included.
+    *  Advanced search features (e.g., filtering, sorting).
+    *  Integration with external data sources (e.g., inventory management).
 
-## 2. Objectives
+**3. Test Strategy: Playwright Automation**
 
-- Verify core functionality works as expected
-- Identify defects before production release
-- Ensure user flows are complete and error-free
-- Validate UI elements and navigation
+We will utilize Playwright to automate the search functionality. Playwright will be used for:
+    * **Automated Test Case Creation:** The structured DOM will provide a foundation for creating automated tests.
+    * **End-to-End Testing:**  The automated tests will simulate a user attempting to search and verify the search results.
+    * **Regression Testing:**  The tests will be designed to cover known functionality and potential regressions.
+    * **User Session Simulation (Limited):**  While full user session simulation is not currently within scope, we’ll investigate basic simulated user interaction for validation.
 
-## 3. Scope
+**4. Test Environment Details**
 
-### In Scope
-- Verification of Email ID and Password login form.
-- Input validation for Email ID and Password fields.
-- "Remember me" checkbox functionality.
-- "Sign in with Google" OAuth integration.
-- "Sign in using SSO" feature.
-- "Sign in with Passkey" feature.
-- Redirection of "Forgot Password?" link.
-- Redirection of "Start a FREE TRIAL" link.
+* **Browser:** Chrome (latest version) – used as the primary browser for testing.
+* **Operating System:** Windows 10, macOS 12, iOS 16, Android 12
+* **Device:** Desktop computer, laptop, tablet (iPad), mobile device (Android/iOS) – representative devices with different screen sizes and resolutions.
+* **Network:** Stable internet connection with varying bandwidths.
+* **Test Data:**  A defined set of product names, including various keywords, partial matches, and rare names.
 
-### Out of Scope
-- Complete end-to-end testing of features post-login (inside the VWO dashboard).
-- Third-party SSO provider's internal authentication failures (beyond VWO's control).
-- Testing of VWO + ABTasty joined forces promotional banner links or content (unless it interferes with login).
 
-## 4. Test Strategy
+**5. Entry and Exit Criteria**
 
-### Test Approach
-- **Automation Tool:** Playwright with @playwright/test
-- **Test Type:** End-to-end functional testing
-- **Browser:** Chromium, Firefox, WebKit
-- **Environment:** Production
+* **Entry Criteria:**
+    * Playwright environment is set up and configured with the test data.
+    * The test case files are created and saved.
+    * The test case design document is reviewed and approved.
+* **Exit Criteria:**
+    * All defined test cases are executed and pass.
+    * A defined percentage of test cases has passed (e.g., 95%).
+    *  The test environment is stable and consistently tested.
 
-### Test Levels
-- Smoke Testing (critical paths)
-- Functional Testing (all features)
-- Negative Testing (invalid inputs, error handling)
+**6. Test Cases Summary (List Titles)**
 
-## 5. Test Environment
+1.  Basic Keyword Search (Simple, common keyword)
+2.  Partial Keyword Search (Requires variations in the keyword)
+3.  Exact Keyword Search (Searching for a precise term)
+4.  Multiple Keyword Search (Testing multiple keywords)
+5.  Search with Empty Results (Attempting to search for no results)
+6.  Search with Multiple Keywords (Testing multiple keywords simultaneously)
+7.  Search with Autocomplete (If implementation exists, test the search)
+8.  Search with Special Characters (Testing different characters like &, #, $)
+9.  Search with Special Characters (Testing different characters like &, #, $)
+10. Search with Numeric and Special characters (Testing different character like &, #, $)
+11. Search with Number and Symbol (Testing different character like &, #, $)
+12. Search for a Product with a Long String (Test for performance impact)
+13. Search with Long String (Test for performance impact)
+14.  Simulate a Large Number of Search Queries (Ensure proper handling of load)
+15.  Test with Mobile Device (Tablet/Smartphone)
+16.  Test User Interface (UI) responsiveness across devices.
 
-| Component | Details |
-|-----------|---------|
-| Application URL | https://app.vwo.com |
-| Browser | Chromium, Firefox, WebKit |
-| OS | Cross-platform (Node.js) |
-| Framework | Playwright v1.58+ |
-| Reporter | HTML + JSON |
+**7. Risk Assessment**
 
-## 6. Entry Criteria
+* **Potential Risk:** Parsing inconsistencies in the DOM structure. - Requires careful test case creation and validation.
+* **Potential Risk:**  Server-side timing issues. - Monitoring server performance.
+* **Potential Risk:** Unexpected interactions with third-party services or APIs. - Focused on data extraction & validation will cover this risk.
 
-- Application is deployed and accessible
-- Test environment is configured
-- Test data is available
-- Test cases are reviewed and approved
+**8. Schedule**
 
-## 7. Exit Criteria
+* **Phase 1: Test Case Design & Setup (2 days)** - Initial test case development, environment setup.
+* **Phase 2: Functional Testing (5 days)** - Execute test cases following the defined workflows.
+* **Phase 3: Regression Testing (2 days)** -  Retest existing functionality to ensure no regressions.
+* **Phase 4: Performance Testing (3 days)** - Monitor and test for performance implications.
+* **Phase 5: Final Review & Sign-Off (1 day)** - Final review of all test cases and sign-off.
 
-- All planned test cases executed
-- All critical/high priority defects resolved
-- Test report generated and reviewed
-- No open blockers
+**9. Deliverables Checklist**
 
-## 8. Test Cases Summary
-
-1. **TC-LOGIN-001 (Positive):** Verify successful login with valid Email ID and Password.
-2. **TC-LOGIN-002 (Negative):** Verify login fails with valid Email ID but incorrect Password.
-3. **TC-LOGIN-003 (Negative):** Verify login fails with an unregistered Email ID.
-4. **TC-LOGIN-004 (Negative):** Verify validation messages when trying to sign in with empty Email ID or Password fields.
-5. **TC-LOGIN-005 (Positive):** Verify the "Remember me" checkbox correctly keeps the user session active (or stores appropriate cookies).
-6. **TC-LOGIN-006 (Positive):** Verify "Forgot Password?" link redirects the user to the password recovery page.
-7. **TC-LOGIN-007 (Positive):** Verify "Sign in with Google" button redirects to Google's OAuth consent screen.
-8. **TC-LOGIN-008 (Positive):** Verify "Sign in using SSO" button redirects to the intended SSO login flow.
-9. **TC-LOGIN-009 (Positive):** Verify "Sign in with Passkey" button initiates the WebAuthn/Passkey flow.
-10. **TC-LOGIN-010 (Positive):** Verify "Start a FREE TRIAL" button redirects to the registration form.
-
-## 9. Risk Assessment
-
-| Risk | Impact | Mitigation |
-|------|--------|-----------|
-| Application downtime | High | Use stable test environment |
-| Flaky tests | Medium | Implement proper waits, no retries |
-| Environment differences | Medium | Use consistent browser version |
-
-## 10. Schedule
-
-| Phase | Duration |
-|-------|----------|
-| Test Planning | 1 day |
-| Test Case Design | 1 day |
-| Test Execution | 1 day |
-| Defect Reporting | Ongoing |
-| Test Closure | 1 day |
-
-## 11. Deliverables
-
-- [x] Test Plan (this document)
-- [ ] Test Cases Document
-- [ ] Test Execution Report (HTML)
-- [ ] Defect Reports (Jira tickets)
-- [ ] Test Summary Report
+* [ ] Test case documentation created and saved.
+* [ ] Test case execution reports generated.
+* [ ] Bug reports generated for identified issues.
+* [ ] Regression testing summary report.
+* [ ] Test environment stability verified on all devices used.
+* [ ] UAT sign-off - Final validation by stakeholders.

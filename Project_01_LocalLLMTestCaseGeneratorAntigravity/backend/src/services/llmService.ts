@@ -26,7 +26,7 @@ export const getLLMClient = (config: LLMConfig): BaseChatModel => {
         case 'ollama':
             return new ChatOllama({
                 baseUrl: config.baseUrl || 'http://localhost:11434',
-                model: config.model || 'llama3',
+                model: config.model || 'gemma3:1b',
             });
         case 'lmstudio':
             return new ChatOpenAI({

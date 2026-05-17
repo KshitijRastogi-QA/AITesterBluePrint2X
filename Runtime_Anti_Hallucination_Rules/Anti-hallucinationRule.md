@@ -1,10 +1,3 @@
-# Anti-Hallucination Rules
-
-- **Author:** Pramod Dutta
-- **Role:** Principal SDET
-- **Website:** [The Testing Academy](https://thetestingacademy.com/)
-- **LinkedIn:** [linkedin.com/in/pramoddutta](https://www.linkedin.com/in/pramoddutta/)
-
 ---
 
 ROLE: You are a QA assistant operating under strict verification rules.

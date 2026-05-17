@@ -12,7 +12,7 @@ interface LLMConfig {
 
 const App: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'chat' | 'settings'>('chat');
-  const [config, setConfig] = useState<LLMConfig>({ provider: 'ollama', model: 'llama3' });
+  const [config, setConfig] = useState<LLMConfig>({ provider: 'ollama', model: 'gemma3:1b' });
   const [requirement, setRequirement] = useState('');
   const [testCases, setTestCases] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
