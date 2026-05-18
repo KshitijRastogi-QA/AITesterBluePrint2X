@@ -1,0 +1,14 @@
+{
+  "name": "kan-4-playwright-tests",
+  "version": "1.0.0",
+  "scripts": {
+    "test": "playwright test",
+    "test:login": "playwright test tests/login/",
+    "test:password-reset": "playwright test tests/password-reset/",
+    "test:headed": "playwright test --headed"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.58.2",
+    "dotenv": "^16.4.5"
+  }
+}

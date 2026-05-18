@@ -4,7 +4,9 @@
   "description": "Test Orchestrator - QA Automation Pipeline",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "backend": "cd app/backend && npm run dev",
+    "frontend": "cd app/frontend && node_modules/.bin/vite",
+    "test": "echo \"No project-level tests. Run 'npm run backend' and 'npm run frontend' in separate terminals.\""
   },
   "keywords": [],
   "author": "",
