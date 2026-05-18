@@ -1,4 +1,4 @@
-const API_BASE = 'http://localhost:8000/api';
+const API_BASE = `${window.location.protocol}//${window.location.hostname}:${window.location.port || 8001}/api`;
 
 // ── App State ───────────────────────────────────────────────
 let currentFile = null;

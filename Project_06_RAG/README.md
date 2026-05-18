@@ -1,5 +1,4 @@
 # Project 06 — Advanced RAG Explorer for QA
-
 A Retrieval-Augmented Generation platform that removes the "black box" of AI by letting you *see* exactly how your QA test cases are ingested, stored, retrieved, and reasoned over.
 
 ---
